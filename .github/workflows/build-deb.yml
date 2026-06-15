@@ -1,0 +1,58 @@
+# SPDX-License-Identifier: MPL-2.0
+name: Build .deb
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-deb:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write   # required so tag builds can publish a Release
+    steps:
+      - uses: actions/checkout@v4
+
+      # libcosmic / iced need a newer Rust than the Ubuntu archive ships, so we
+      # build with the rustup stable toolchain rather than apt's cargo/rustc.
+      - name: Install Rust (stable)
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            build-essential debhelper dpkg-dev fakeroot pkg-config \
+            libdrm-dev libxkbcommon-dev libwayland-dev \
+            libfontconfig-dev libexpat1-dev
+
+      - name: Build the .deb
+        run: |
+          # -d skips the apt cargo/rustc build-dep check; debian/rules calls the
+          # rustup `cargo` installed above (first on PATH). The package is
+          # produced in the parent directory, so collect it into dist/.
+          dpkg-buildpackage -b -us -uc -d
+          mkdir -p dist
+          mv ../cosmic-nightshift_*.deb dist/
+          ls -l dist/
+
+      - name: Upload .deb as build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: cosmic-nightshift-deb
+          path: dist/*.deb
+          if-no-files-found: error
+
+      # Only on a pushed tag like v0.1.0: attach the .deb to a GitHub Release.
+      - name: Publish GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*.deb
+          generate_release_notes: true

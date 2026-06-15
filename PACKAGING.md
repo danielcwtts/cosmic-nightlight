@@ -39,6 +39,39 @@ dpkg-buildpackage -b -us -uc
 sudo apt install ../cosmic-nightshift_0.1.0-1_amd64.deb
 ```
 
+## Automated builds & releases (GitHub Actions)
+
+[`.github/workflows/build-deb.yml`](.github/workflows/build-deb.yml) builds the
+`.deb` on an `ubuntu-24.04` (noble) runner — the same base this package targets:
+
+- **Every push to `main` and every pull request** builds the `.deb` and uploads
+  it as a workflow **artifact** (download it from the run's *Summary* page). This
+  is the CI check that proves a change still packages.
+- **Pushing a tag `v*`** builds the `.deb` and publishes a **GitHub Release**
+  with the `.deb` attached, so users can grab it from the *Releases* page.
+
+The runner has network, so cargo fetches the libcosmic git dependency directly —
+no vendoring is needed (that's only for the offline path below).
+
+### Cutting a release
+
+The `.deb` version comes from `debian/changelog`, not the git tag, so bump it
+first, then tag to match:
+
+```sh
+# 1. Add a new changelog entry (e.g. 0.2.0-1). dch is from the `devscripts` pkg.
+dch -v 0.2.0-1 "Describe the changes"      # or edit debian/changelog by hand
+git commit -am "Release 0.2.0-1"
+git push
+
+# 2. Tag it; the push triggers the release build.
+git tag v0.2.0
+git push --tags
+```
+
+The workflow then builds `cosmic-nightshift_0.2.0-1_amd64.deb` and attaches it to
+a `v0.2.0` Release with auto-generated notes.
+
 ## Clean-room / offline build (PPA, sbuild, Launchpad)
 
 Official build environments have **no network**, and cargo cannot fetch the
