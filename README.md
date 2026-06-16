@@ -11,17 +11,35 @@ It exists because COSMIC's compositor does not yet expose a color/gamma
 protocol, so the usual tools (`redshift`, `gammastep`, `wlsunset`) can't adjust
 the screen — see [How it works](#how-it-works).
 
+## Contents
+
+- [Screenshots](#screenshots)
+- [Install](#install)
+  - [Build from source (for development)](#build-from-source-for-development)
+- [Using it](#using-it)
+- [Known limitations](#known-limitations)
+- [How it works](#how-it-works)
+- [Architecture](#architecture)
+- [The real fix](#the-real-fix)
+
 ## Screenshots
 
-The panel applet popup — a quick on/off toggle and a temperature slider:
-
-![Night Light applet popup](docs/screenshots/applet_light.png#gh-light-mode-only)
-![Night Light applet popup](docs/screenshots/applet_dark.png#gh-dark-mode-only)
-
-The settings window — schedule, night temperature, and start-on-login:
-
-![Night Light settings window](docs/screenshots/settings_light.png#gh-light-mode-only)
-![Night Light settings window](docs/screenshots/settings_dark.png#gh-dark-mode-only)
+<div align="center">
+<table>
+<tr>
+<td align="center">
+<img src="docs/screenshots/applet_light.png#gh-light-mode-only" height="300" alt="Night Light applet popup">
+<img src="docs/screenshots/applet_dark.png#gh-dark-mode-only" height="300" alt="Night Light applet popup">
+<br><sub>Panel applet popup — on/off toggle and temperature slider</sub>
+</td>
+<td align="center">
+<img src="docs/screenshots/settings_light.png#gh-light-mode-only" height="300" alt="Night Light settings window">
+<img src="docs/screenshots/settings_dark.png#gh-dark-mode-only" height="300" alt="Night Light settings window">
+<br><sub>Settings window — schedule, night temperature, start-on-login</sub>
+</td>
+</tr>
+</table>
+</div>
 
 > These images are theme-aware: GitHub shows the light screenshots in light
 > mode and the dark screenshots in dark mode.
