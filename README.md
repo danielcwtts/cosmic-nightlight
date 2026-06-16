@@ -11,6 +11,21 @@ It exists because COSMIC's compositor does not yet expose a color/gamma
 protocol, so the usual tools (`redshift`, `gammastep`, `wlsunset`) can't adjust
 the screen — see [How it works](#how-it-works).
 
+## Screenshots
+
+The panel applet popup — a quick on/off toggle and a temperature slider:
+
+![Night Light applet popup](docs/screenshots/applet_light.png#gh-light-mode-only)
+![Night Light applet popup](docs/screenshots/applet_dark.png#gh-dark-mode-only)
+
+The settings window — schedule, night temperature, and start-on-login:
+
+![Night Light settings window](docs/screenshots/settings_light.png#gh-light-mode-only)
+![Night Light settings window](docs/screenshots/settings_dark.png#gh-dark-mode-only)
+
+> These images are theme-aware: GitHub shows the light screenshots in light
+> mode and the dark screenshots in dark mode.
+
 ## Install
 
 The easy way — install the `.deb` from the COSMIC Store:
