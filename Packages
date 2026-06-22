@@ -1,0 +1,27 @@
+Package: cosmic-nightlight
+Version: 0.3.1-1
+Architecture: amd64
+Maintainer: Daniel Watts <danielcwtts@gmail.com>
+Installed-Size: 22212
+Depends: libc6 (>= 2.39), libgcc-s1 (>= 4.2), libxkbcommon0 (>= 0.5.0), init-system-helpers (>= 1.52), polkitd | policykit-1
+Filename: ./cosmic-nightlight_0.3.1-1_amd64.deb
+Size: 6342638
+MD5sum: 728d7193ccfd565ee5715fb9de679b36
+SHA1: d414b52df21daa190c08f2aa5d4ed524aca8bee8
+SHA256: 846d0e08a3153f00fc7bcbf1ccba2cb9fe24f84a1eb554b0815c86e1b04aa11e
+Section: x11
+Priority: optional
+Homepage: https://github.com/danielcwtts/cosmic-nightlight
+Description: Night light / red tint for the COSMIC desktop
+ A night-light utility for the COSMIC desktop (Pop!_OS) that warms the screen
+ color temperature on a schedule.
+ .
+ COSMIC's compositor does not yet expose a gamma-control Wayland protocol, so
+ this package writes the gamma ramp directly to the kernel's DRM/KMS layer. A
+ small privileged helper (run via polkit/pkexec) briefly switches virtual
+ terminals so the compositor releases the DRM master lock, applies the gamma
+ LUTs to every active display, and switches back; the tint then persists.
+ .
+ Ships a libcosmic GUI, a background scheduler (systemd user service), and the
+ polkit rule that lets desktop users apply the tint without a password prompt.
+
